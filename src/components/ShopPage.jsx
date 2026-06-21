@@ -1,28 +1,95 @@
 import { useEffect, useState } from "react";
+import { useOutletContext } from "react-router";
 
 export default function Shop() {
   const [products, setProducts] = useState();
+  const [quantity, setQuantity] = useState({});
+  const { addedProducts, setAddedProducts } = useOutletContext();
 
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
       .then((res) => res.json())
       .then((json) => setProducts(json));
   }, []);
-  console.log(products);
+  // console.log(products);
+
+  function handleClick(value) {
+    const product = products.find((product) => product.id === value);
+    const newProduct = [
+      ...addedProducts,
+      {
+        id: product.id,
+        title: product.title,
+        image: product.image,
+        price: product.price,
+        quantity: quantity[value],
+      },
+    ];
+    setAddedProducts(newProduct);
+  }
+
+  function handleIncrease(value) {
+    setQuantity({ ...quantity, [value]: (quantity[value] || 0) + 1 });
+  }
+  function handleDecrease(value) {
+    quantity[value] > 0 ?
+    setQuantity({ ...quantity, [value]: (quantity[value] || 0) - 1 })
+    :
+    null;
+  }
+
   return (
-    <div>
+    <div className="grid grid-cols-1 gap-6 p-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {Array.isArray(products) && products.length > 0 ? (
         products.map((product) => {
+          const currQuantity = quantity[product.id] || 0;
           return (
-            <div key={product.id} className="product-card">
-              <img src={product.image} alt={product.description} />
-              <h1>{product.title}</h1>
-              <h2>{product.price}</h2>
+            <div
+              key={product.id}
+              className="flex flex-col rounded-xl border border-gray-200 bg-white p-4 shadow-md transition hover:shadow-xl"
+            >
+              <img
+                src={product.image}
+                alt={product.description}
+                className="h-60 w-full object-contain"
+              />
+
+              <h1 className="mt-4 line-clamp-2 text-lg font-semibold">
+                {product.title}
+              </h1>
+
+              <h2 className="mt-2 text-2xl font-bold text-green-600">
+                ${product.price}
+              </h2>
+
+              <div className="mt-4 flex items-center justify-center gap-4">
+                <button
+                  onClick={() => handleDecrease(product.id)}
+                  className="h-10 w-10 rounded-lg bg-gray-200 text-xl font-bold hover:bg-gray-300"
+                >
+                  -
+                </button>
+
+                <p className="text-lg font-semibold">{currQuantity}</p>
+
+                <button
+                  onClick={() => handleIncrease(product.id)}
+                  className="h-10 w-10 rounded-lg bg-gray-200 text-xl font-bold hover:bg-gray-300"
+                >
+                  +
+                </button>
+              </div>
+              <button
+                onClick={() => handleClick(product.id)}
+                className="mt-4 rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition hover:bg-blue-700"
+              >
+                Add to cart
+              </button>
             </div>
           );
         })
       ) : (
-        <p>Loading...</p>
+        <p className="col-span-full text-center text-xl">Loading...</p>
       )}
     </div>
   );

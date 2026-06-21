@@ -2,10 +2,21 @@ import { Link } from "react-router";
 
 export default function Home() {
   return (
-    <div>
-      <h1>daLimit</h1>
-      <p>Luxury never seen before.</p>
-      <Link to="/shop">Browse</Link>
-    </div>
+<div className="flex min-h-[80vh] flex-col items-center justify-center text-center">
+  <h1 className="text-7xl font-light tracking-[0.3em] uppercase">
+    daLimit
+  </h1>
+
+  <p className="mt-6 text-gray-500">
+    Luxury never seen before.
+  </p>
+
+  <Link
+    to="/shop"
+    className="mt-10 border border-black px-8 py-3 transition hover:bg-black hover:text-white"
+  >
+    SHOP NOW
+  </Link>
+</div>
   );
 }

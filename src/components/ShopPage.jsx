@@ -3,8 +3,7 @@ import { useOutletContext } from "react-router";
 
 export default function Shop() {
   const [products, setProducts] = useState();
-  const [quantity, setQuantity] = useState({});
-  const { addedProducts, setAddedProducts } = useOutletContext();
+  const { addedProducts, setAddedProducts, handleDecrease, handleIncrease, quantity } = useOutletContext();
 
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
@@ -22,27 +21,17 @@ export default function Shop() {
         title: product.title,
         image: product.image,
         price: product.price,
-        quantity: quantity[value],
+        quantity: quantity[value]|| 1,
       },
     ];
     setAddedProducts(newProduct);
-  }
-
-  function handleIncrease(value) {
-    setQuantity({ ...quantity, [value]: (quantity[value] || 0) + 1 });
-  }
-  function handleDecrease(value) {
-    quantity[value] > 0 ?
-    setQuantity({ ...quantity, [value]: (quantity[value] || 0) - 1 })
-    :
-    null;
   }
 
   return (
     <div className="grid grid-cols-1 gap-6 p-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {Array.isArray(products) && products.length > 0 ? (
         products.map((product) => {
-          const currQuantity = quantity[product.id] || 0;
+          const currQuantity = quantity[product.id] || 1;
           return (
             <div
               key={product.id}
@@ -67,7 +56,7 @@ export default function Shop() {
                   onClick={() => handleDecrease(product.id)}
                   className="h-10 w-10 rounded-lg bg-gray-200 text-xl font-bold hover:bg-gray-300"
                 >
-                  -
+                  {"<"}
                 </button>
 
                 <p className="text-lg font-semibold">{currQuantity}</p>
@@ -76,7 +65,7 @@ export default function Shop() {
                   onClick={() => handleIncrease(product.id)}
                   className="h-10 w-10 rounded-lg bg-gray-200 text-xl font-bold hover:bg-gray-300"
                 >
-                  +
+                  {">"}
                 </button>
               </div>
               <button

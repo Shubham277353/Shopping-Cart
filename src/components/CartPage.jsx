@@ -72,6 +72,12 @@ export default function Cart() {
               </div>
             </div>)
           })}
+
+          <div>
+            <button>
+              Checkout
+            </button>
+          </div>
         </div>
       ) : (
         <div className="rounded-xl bg-white py-20 text-center shadow-md">
@@ -82,6 +88,7 @@ export default function Cart() {
           </p>
         </div>
       )}
+
     </div>
   );
 }

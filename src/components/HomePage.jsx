@@ -8,7 +8,7 @@ export default function Home() {
   </h1>
 
   <p className="mt-6 text-gray-500">
-    Luxury never seen before.
+    Affordability never seen before.
   </p>
 
   <Link

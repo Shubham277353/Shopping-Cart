@@ -4,6 +4,15 @@ import { useState } from "react";
 const App = () => {
   const [addedProducts, setAddedProducts] = useState([]);
   const [quantity, setQuantity] = useState({});
+  const [message, setMessage] = useState("");
+
+    function setMessages(value) {
+    setMessage(value);
+
+    setTimeout(() => {
+      setMessage("");
+    }, 2000);
+  }
 
   function handleIncrease(value) {
     setQuantity({ ...quantity, [value]: (quantity[value] || 1) + 1 });
@@ -60,6 +69,9 @@ const App = () => {
             handleDecrease,
             handleIncrease,
             quantity,
+            message,
+            setMessage,
+            setMessages
           }}
         />
       </main>

@@ -3,13 +3,15 @@ import { useOutletContext } from "react-router";
 
 export default function Shop() {
   const [products, setProducts] = useState();
-  const [popup, setPopup] = useState(false);
+
   const {
     addedProducts,
     setAddedProducts,
     handleDecrease,
     handleIncrease,
     quantity,
+    message,
+    setMessages,
   } = useOutletContext();
 
   useEffect(() => {
@@ -19,15 +21,14 @@ export default function Shop() {
   }, []);
   // console.log(products);
 
-
   function handleClick(value) {
+    if (message) {
+      return null;
+    }
     const isPresent = addedProducts.some((product) => product.id == value);
     if (isPresent) {
-      setPopup(true);
-
-      setTimeout(() => {
-        setPopup(false);
-      }, 3000);
+      setMessages("Product already in the cart");
+      return null;
     }
     const product = products.find((product) => product.id === value);
     const newProduct = [
@@ -40,6 +41,7 @@ export default function Shop() {
         quantity: quantity[value] || 1,
       },
     ];
+    setMessages("Product added to cart.");
     setAddedProducts(newProduct);
   }
 
@@ -97,14 +99,11 @@ export default function Shop() {
         <p className="col-span-full text-center text-xl">Loading...</p>
       )}
 
-      {popup ?
-      <div className="fixed right-4 top-4 z-50 rounded-lg border border-amber-300 bg-white px-5 py-3 shadow-xl">
-        <p className="font-medium text-amber-700">
-          Product is already in the cart
-        </p>
-      </div>
-      : null}
-
+      {message && (
+        <div className="fixed right-4 top-4 z-50 rounded-lg border border-amber-300 bg-white px-5 py-3 shadow-xl">
+          <p className="font-medium text-amber-700">{message}</p>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useOutletContext } from "react-router";
 import { Trash } from "lucide-react";
+import { Link } from "react-router";
 
 export default function Cart() {
   const {
@@ -14,14 +15,10 @@ export default function Cart() {
 
   function handleDelete(id) {
     const newProducts = addedProducts.filter((product) => product.id != id);
-    setMessages("Product removed from cart.")
+    setMessages("Product removed from cart.");
     setAddedProducts(newProducts);
   }
 
-  function handleCheckOut(){
-
-  }
-  
   // console.log(addedProducts);
 
   return (
@@ -83,9 +80,13 @@ export default function Cart() {
             );
           })}
 
-          <div>
-            <button onClick={handleCheckOut}
-            >Checkout</button>
+          <div className="mt-6 flex justify-end">
+            <Link
+              to="/success"
+              className="rounded-xl bg-slate-900 px-8 py-3 font-semibold text-white shadow-md transition duration-200 hover:-translate-y-0.5 hover:bg-slate-800 hover:shadow-lg"
+            >
+              Proceed to Checkout →
+            </Link>
           </div>
         </div>
       ) : (

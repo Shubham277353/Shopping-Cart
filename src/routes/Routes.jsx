@@ -4,6 +4,7 @@ import Shop from "../components/ShopPage";
 import Cart from "../components/CartPage";
 import DefaultPage from "../components/DefaultPage";
 import ErrorPage from "../components/ErrorPage";
+import PaymentSuccess from "../components/PaymentSuccessPage";
 
 const Routes = [
   {
@@ -17,6 +18,7 @@ const Routes = [
       { path: "cart", element: <Cart /> },
     ],
   },
+  { path: "success", element: <PaymentSuccess /> },
 ];
 
 export default Routes;

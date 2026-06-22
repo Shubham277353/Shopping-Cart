@@ -3,7 +3,14 @@ import { useOutletContext } from "react-router";
 
 export default function Shop() {
   const [products, setProducts] = useState();
-  const { addedProducts, setAddedProducts, handleDecrease, handleIncrease, quantity } = useOutletContext();
+  const [popup, setPopup] = useState(false);
+  const {
+    addedProducts,
+    setAddedProducts,
+    handleDecrease,
+    handleIncrease,
+    quantity,
+  } = useOutletContext();
 
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
@@ -12,7 +19,16 @@ export default function Shop() {
   }, []);
   // console.log(products);
 
+
   function handleClick(value) {
+    const isPresent = addedProducts.some((product) => product.id == value);
+    if (isPresent) {
+      setPopup(true);
+
+      setTimeout(() => {
+        setPopup(false);
+      }, 3000);
+    }
     const product = products.find((product) => product.id === value);
     const newProduct = [
       ...addedProducts,
@@ -21,7 +37,7 @@ export default function Shop() {
         title: product.title,
         image: product.image,
         price: product.price,
-        quantity: quantity[value]|| 1,
+        quantity: quantity[value] || 1,
       },
     ];
     setAddedProducts(newProduct);
@@ -80,6 +96,15 @@ export default function Shop() {
       ) : (
         <p className="col-span-full text-center text-xl">Loading...</p>
       )}
+
+      {popup ?
+      <div className="fixed right-4 top-4 z-50 rounded-lg border border-amber-300 bg-white px-5 py-3 shadow-xl">
+        <p className="font-medium text-amber-700">
+          Product is already in the cart
+        </p>
+      </div>
+      : null}
+
     </div>
   );
 }

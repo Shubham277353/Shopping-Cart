@@ -100,8 +100,14 @@ export default function Shop() {
       )}
 
       {message && (
-        <div className="fixed right-4 top-4 z-50 rounded-lg border border-amber-300 bg-white px-5 py-3 shadow-xl">
-          <p className="font-medium text-amber-700">{message}</p>
+        <div
+          className={`fixed right-4 top-4 z-50 rounded-lg px-5 py-3 shadow-xl ${
+            message === "Product added to cart."
+              ? "border border-green-300 bg-green-500 text-white"
+              : "border border-amber-300 bg-amber-50 text-amber-800"
+          }`}
+        >
+          <p className="font-medium">{message}</p>
         </div>
       )}
     </div>

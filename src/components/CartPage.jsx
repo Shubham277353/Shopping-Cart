@@ -13,6 +13,12 @@ export default function Cart() {
     setMessages,
   } = useOutletContext();
 
+  let totalAmount = 0;
+
+  function clacTotalAmount(){
+    addedProducts.map((product)=> totalAmount += product.price);
+  }
+
   function handleDelete(id) {
     const newProducts = addedProducts.filter((product) => product.id != id);
     setMessages("Product removed from cart.");
@@ -79,6 +85,8 @@ export default function Cart() {
               </div>
             );
           })}
+
+
 
           <div className="mt-6 flex justify-end">
             <Link

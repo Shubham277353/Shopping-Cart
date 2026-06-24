@@ -19,6 +19,6 @@ const Routes = [
     ],
   },
   { path: "success", element: <PaymentSuccess /> },
-];
+];``
 
 export default Routes;

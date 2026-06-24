@@ -6,7 +6,8 @@ const App = () => {
   const [quantity, setQuantity] = useState({});
   const [message, setMessage] = useState("");
 
-    function setMessages(value) {
+
+  function setMessages(value) {
     setMessage(value);
 
     setTimeout(() => {
@@ -71,7 +72,7 @@ const App = () => {
             quantity,
             message,
             setMessage,
-            setMessages
+            setMessages,
           }}
         />
       </main>

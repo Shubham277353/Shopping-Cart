@@ -1,6 +1,7 @@
 import { useOutletContext } from "react-router";
 import { Trash } from "lucide-react";
 import { Link } from "react-router";
+// import { useState } from "react";
 
 export default function Cart() {
   const {
@@ -13,11 +14,11 @@ export default function Cart() {
     setMessages,
   } = useOutletContext();
 
-  let totalAmount = 0;
 
-  function clacTotalAmount(){
-    addedProducts.map((product)=> totalAmount += product.price);
-  }
+  const total = addedProducts.reduce((sum, product) => {
+    const currQuantity = quantity[product.id] || 1;
+    return sum + product.price * currQuantity;
+  }, 0);
 
   function handleDelete(id) {
     const newProducts = addedProducts.filter((product) => product.id != id);
@@ -86,7 +87,9 @@ export default function Cart() {
             );
           })}
 
-
+          <div>
+            <h2>Total Price : {total.toFixed(2)}</h2>
+          </div>
 
           <div className="mt-6 flex justify-end">
             <Link

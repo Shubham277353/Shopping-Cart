@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { useOutletContext } from "react-router";
+import { useContext, useEffect, useState } from "react";
+// import { useOutletContext } from "react-router";
+import { ShopContext } from "../context/ShopContext";
 
 export default function Shop() {
   const [products, setProducts] = useState();
-
   const {
     addedProducts,
     setAddedProducts,
@@ -12,7 +12,7 @@ export default function Shop() {
     quantity,
     message,
     setMessages,
-  } = useOutletContext();
+  } = useContext(ShopContext);
 
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")

@@ -1,7 +1,8 @@
-import { useOutletContext } from "react-router";
+// import { useOutletContext } from "react-router";
 import { Trash } from "lucide-react";
 import { Link } from "react-router";
-// import { useState } from "react";
+import { ShopContext } from "../context/ShopContext";
+import { useContext } from "react";
 
 export default function Cart() {
   const {
@@ -12,7 +13,7 @@ export default function Cart() {
     quantity,
     message,
     setMessages,
-  } = useOutletContext();
+  } = useContext(ShopContext);
 
   const total = addedProducts.reduce((sum, product) => {
     const currQuantity = quantity[product.id] || 1;

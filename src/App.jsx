@@ -1,11 +1,14 @@
 import { Link, Outlet } from "react-router";
 import { useState } from "react";
+import Home from "./components/HomePage";
+import Shop from "./components/ShopPage";
+import Cart from "./components/CartPage";
+import { ShopContext } from "./context/ShopContext";
 
 const App = () => {
   const [addedProducts, setAddedProducts] = useState([]);
   const [quantity, setQuantity] = useState({});
   const [message, setMessage] = useState("");
-
 
   function setMessages(value) {
     setMessage(value);
@@ -124,6 +127,23 @@ const App = () => {
           </div>
         </div>
       </footer>
+      {/* context to send data directly to the componenets without the use of outletContext. */}
+      <ShopContext
+        value={{
+          addedProducts,
+          setAddedProducts,
+          quantity,
+          setQuantity,
+          message,
+          setMessage,
+          handleDecrease,
+          handleIncrease,
+        }}
+      >
+        <Home />
+        <Shop />
+        <Cart />
+      </ShopContext>
     </div>
   );
 };

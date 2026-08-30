@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-// import { useOutletContext } from "react-router";
 import { ShopContext } from "../context/ShopContext";
 
 export default function Shop() {
